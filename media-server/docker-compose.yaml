@@ -14,6 +14,11 @@ services:
       - /mnt/t5/library/tv:/tv
       - /mnt/t5/library/movies:/movies
     restart: unless-stopped
+    healthcheck:
+      test: curl -f http://localhost:32400/web/index.html
+      interval: 10s
+      timeout: 5s
+      retries: 5
   sonarr:
     image: ghcr.io/linuxserver/sonarr
     container_name: sonarr
@@ -27,6 +32,11 @@ services:
       - /mnt/t5/downloads:/downloads
     ports:
       - 8989:8989
+    healthcheck:
+      test: curl -f http://localhost:8989
+      interval: 10s
+      timeout: 5s
+      retries: 5
   radarr:
     image: ghcr.io/linuxserver/radarr
     container_name: radarr
@@ -41,6 +51,11 @@ services:
     ports:
       - 7878:7878
     restart: unless-stopped
+    healthcheck:
+      test: curl -f http://localhost:7878
+      interval: 10s
+      timeout: 5s
+      retries: 5
   jackett:
     image: ghcr.io/linuxserver/jackett
     container_name: jackett
@@ -55,6 +70,11 @@ services:
     ports:
       - 9117:9117
     restart: unless-stopped
+    healthcheck:
+      test: curl -f http://localhost:9117
+      interval: 10s
+      timeout: 5s
+      retries: 5
   transmission:
     image: ghcr.io/linuxserver/transmission
     container_name: transmission
@@ -65,8 +85,14 @@ services:
     volumes:
       - /mnt/t5/config/transmission:/config
       - /mnt/t5/downloads:/downloads
+      - /mnt/t5/watch:/watch
     ports:
       - 9091:9091
       - 51413:51413
       - 51413:51413/udp
     restart: unless-stopped
+    healthcheck:
+      test: curl -f http://localhost:9091/transmission/web/
+      interval: 10s
+      timeout: 5s
+      retries: 5
