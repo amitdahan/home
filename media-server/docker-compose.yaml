@@ -1,0 +1,72 @@
+---
+version: "2.1"
+services:
+  plex:
+    image: ghcr.io/linuxserver/plex
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+    volumes:
+      - /mnt/t5/config/plex:/config
+      - /mnt/t5/library/tv:/tv
+      - /mnt/t5/library/movies:/movies
+    restart: unless-stopped
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Jerusalem
+    volumes:
+      - /mnt/t5/config/sonarr:/config
+      - /mnt/t5/library/tv:/tv
+      - /mnt/t5/downloads:/downloads
+    ports:
+      - 8989:8989
+  radarr:
+    image: ghcr.io/linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Jerusalem
+    volumes:
+      - /mnt/t5/config/radarr:/config
+      - /mnt/t5/library/movies:/movies
+      - /mnt/t5/downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+  jackett:
+    image: ghcr.io/linuxserver/jackett
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Jerusalem
+      - AUTO_UPDATE=true
+    volumes:
+      - /mnt/t5/config/jakett:/config
+      - /mnt/t5/downloads:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+  transmission:
+    image: ghcr.io/linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Jerusalem
+    volumes:
+      - /mnt/t5/config/transmission:/config
+      - /mnt/t5/downloads:/downloads
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
