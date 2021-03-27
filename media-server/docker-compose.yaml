@@ -1,5 +1,6 @@
 ---
-version: "2.1"
+version: "3.8"
+
 services:
   plex:
     image: ghcr.io/linuxserver/plex
@@ -19,6 +20,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
   sonarr:
     image: ghcr.io/linuxserver/sonarr
     container_name: sonarr
@@ -37,6 +39,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
   radarr:
     image: ghcr.io/linuxserver/radarr
     container_name: radarr
@@ -56,6 +59,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
   jackett:
     image: ghcr.io/linuxserver/jackett
     container_name: jackett
@@ -75,6 +79,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
   transmission:
     image: ghcr.io/linuxserver/transmission
     container_name: transmission
