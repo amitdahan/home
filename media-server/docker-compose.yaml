@@ -2,6 +2,62 @@
 version: "3.8"
 
 services:
+  emby:
+    image: ghcr.io/linuxserver/emby
+    container_name: emby
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Jerusalem
+    volumes:
+      - ${DATA_PATH}/config/emby:/config
+      - ${DATA_PATH}/library/tv:/data/tvshows
+      - ${DATA_PATH}/library/movies:/data/movies
+      - /opt/vc/lib:/opt/vc/lib
+    ports:
+      - 9096:8096
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/vchiq:/dev/vchiq
+      - /dev/video10:/dev/video10
+      - /dev/video11:/dev/video11
+      - /dev/video12:/dev/video12
+    restart: unless-stopped
+    healthcheck:
+      test: curl -f http://localhost:8096
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  jellyfin:
+    image: ghcr.io/linuxserver/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Jerusalem
+    volumes:
+      - ${DATA_PATH}/config/jellyfin:/config
+      - ${DATA_PATH}/library/tv:/data/tvshows
+      - ${DATA_PATH}/library/movies:/data/movies
+      - /opt/vc/lib:/opt/vc/lib
+    ports:
+      - 8096:8096
+      - 7359:7359/udp
+      - 1900:1900/udp
+    devices:
+      - /dev/vcsm-cma:/dev/vcsm
+      - /dev/vchiq:/dev/vchiq
+      - /dev/video10:/dev/video10
+      - /dev/video11:/dev/video11
+      - /dev/video12:/dev/video12
+    restart: unless-stopped
+    healthcheck:
+      test: curl -f http://localhost:8096
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   plex:
     image: ghcr.io/linuxserver/plex
     container_name: plex
