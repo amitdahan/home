@@ -2,70 +2,84 @@
 version: "3.8"
 
 services:
-  emby:
-    image: ghcr.io/linuxserver/emby
-    container_name: emby
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Jerusalem
-    volumes:
-      - ${DATA_PATH}/config/emby:/config
-      - ${DATA_PATH}/library/tv:/data/tvshows
-      - ${DATA_PATH}/library/movies:/data/movies
-      - /opt/vc/lib:/opt/vc/lib
-    ports:
-      - 9096:8096
-    devices:
-      - /dev/dri:/dev/dri
-      - /dev/vchiq:/dev/vchiq
-      - /dev/video10:/dev/video10
-      - /dev/video11:/dev/video11
-      - /dev/video12:/dev/video12
-    restart: unless-stopped
-    healthcheck:
-      test: curl -f http://localhost:8096
-      interval: 10s
-      timeout: 5s
-      retries: 5
+#  emby:
+#    image: ghcr.io/linuxserver/emby
+#    container_name: emby
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=Asia/Jerusalem
+#    volumes:
+#      - ${DATA_PATH}/config/emby:/config
+#      - ${DATA_PATH}/library/tv:/data/tvshows
+#      - ${DATA_PATH}/library/movies:/data/movies
+#      - /opt/vc/lib:/opt/vc/lib
+#    ports:
+#      - 9096:8096
+#    devices:
+#      - /dev/dri:/dev/dri
+#      - /dev/vchiq:/dev/vchiq
+#      - /dev/video10:/dev/video10
+#      - /dev/video11:/dev/video11
+#      - /dev/video12:/dev/video12
+#    restart: unless-stopped
+#    healthcheck:
+#      test: curl -f http://localhost:8096
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
-  jellyfin:
-    image: ghcr.io/linuxserver/jellyfin
-    container_name: jellyfin
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Jerusalem
-    volumes:
-      - ${DATA_PATH}/config/jellyfin:/config
-      - ${DATA_PATH}/library/tv:/data/tvshows
-      - ${DATA_PATH}/library/movies:/data/movies
-      - /opt/vc/lib:/opt/vc/lib
-    ports:
-      - 8096:8096
-      - 7359:7359/udp
-      - 1900:1900/udp
-    devices:
-      - /dev/vcsm-cma:/dev/vcsm
-      - /dev/vchiq:/dev/vchiq
-      - /dev/video10:/dev/video10
-      - /dev/video11:/dev/video11
-      - /dev/video12:/dev/video12
-    restart: unless-stopped
-    healthcheck:
-      test: curl -f http://localhost:8096
-      interval: 10s
-      timeout: 5s
-      retries: 5
+#  jellyfin:
+#    image: ghcr.io/linuxserver/jellyfin
+#    container_name: jellyfin
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=Asia/Jerusalem
+#    volumes:
+#      - ${DATA_PATH}/config/jellyfin:/config
+#      - ${DATA_PATH}/library/tv:/data/tvshows
+#      - ${DATA_PATH}/library/movies:/data/movies
+#      - /opt/vc/lib:/opt/vc/lib
+#    ports:
+#      - 8096:8096
+#      - 7359:7359/udp
+#      - 1900:1900/udp
+#    devices:
+#      - /dev/vcsm-cma:/dev/vcsm
+#      - /dev/vchiq:/dev/vchiq
+#      - /dev/video10:/dev/video10
+#      - /dev/video11:/dev/video11
+#      - /dev/video12:/dev/video12
+#      - /dev/video13:/dev/video13
+#      - /dev/video14:/dev/video14
+#      - /dev/video15:/dev/video15
+#      - /dev/video16:/dev/video16
+#    restart: unless-stopped
+#    healthcheck:
+#      test: curl -f http://localhost:8096
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
   plex:
     image: ghcr.io/linuxserver/plex
     container_name: plex
-    network_mode: host
     environment:
       - PUID=1000
       - PGID=1000
       - VERSION=docker
+    ports:
+      - 32400:32400
+      - 1900:1900/udp
+      - 3005:3005
+      - 5454:5353/udp
+      - 8324:8324
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+      - 32469:32469
     volumes:
       - ${DATA_PATH}/config/plex:/config
       - ${DATA_PATH}/library/tv:/tv
