@@ -1,7 +1,6 @@
 {
   "name": "home",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "git@github.com:amitdahan/home.git",
   "author": "Amit Dahan <amitdahan11@gmail.com>",
   "license": "MIT",
