@@ -2,6 +2,15 @@
 version: "3.8"
 
 services:
+  homevisor:
+    build: ../packages/home-visor
+    container_name: home_visor
+    environment:
+      - NODE_ENV=production
+      - PORT=8081
+    ports:
+      - 8081:8081
+
   portainer:
     image: portainer/portainer-ce
     container_name: portainer
