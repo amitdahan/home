@@ -9,11 +9,12 @@ services:
       - NODE_ENV=production
     ports:
       - 3000:3000
-      healthcheck:
-        test: curl -f http://localhost:3000
-        interval: 10s
-        timeout: 5s
-        retries: 5
+    restart: always
+    healthcheck:
+      test: curl -f http://localhost:3000
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   portainer:
     image: portainer/portainer-ce
