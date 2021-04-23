@@ -7,9 +7,8 @@ services:
     container_name: home_visor
     environment:
       - NODE_ENV=production
-      - PORT=8081
     ports:
-      - 8081:8081
+      - 3000:3000
 
   portainer:
     image: portainer/portainer-ce
