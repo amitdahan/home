@@ -7,8 +7,11 @@ services:
     container_name: home_visor
     environment:
       - NODE_ENV=production
+      - DOCKER_SOCKET_URL=/var/run/docker.sock
     ports:
       - 3000:3000
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: always
     healthcheck:
       test: curl -f http://localhost:3000
