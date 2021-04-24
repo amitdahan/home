@@ -19,7 +19,7 @@ ENV NODE_ENV production
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
-RUN addgroup -g 995 -S docker
+RUN addgroup -g $(cat --format="%g" /var/run/docker.sock) -S docker
 RUN addgroup nextjs docker
 
 COPY --from=builder /app/next.config.js ./
