@@ -38,7 +38,7 @@ export default function Home() {
           <div key={container.id}>
             {container.names.join(', ')} ({container.image}) - {container.status}
           </div>
-        )}
+        ))}
       </main>
     </div>
   );
