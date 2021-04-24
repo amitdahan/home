@@ -4,6 +4,8 @@ version: "3.8"
 services:
   homevisor:
     build: ../packages/home-visor
+      args: 
+        docker_gid: ${DOCKER_GID}
     container_name: home_visor
     environment:
       - NODE_ENV=production

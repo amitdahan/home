@@ -17,9 +17,11 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
+ARG docker_gid
+
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
-RUN addgroup -g ${DOCKER_GID} -S docker
+RUN addgroup -g $docker_gid -S docker
 RUN addgroup nextjs docker
 
 COPY --from=builder /app/next.config.js ./
