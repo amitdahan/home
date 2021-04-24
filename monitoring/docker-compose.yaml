@@ -3,7 +3,8 @@ version: "3.8"
 
 services:
   homevisor:
-    build: ../packages/home-visor
+    build: 
+      context: ../packages/home-visor
       args: 
         docker_gid: ${DOCKER_GID}
     container_name: home_visor
