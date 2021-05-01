@@ -1,6 +1,6 @@
-import React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import '../styles/globals.css'
+import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import "../styles/globals.css";
 
 const queryClient = new QueryClient();
 
@@ -12,4 +12,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp
+export default MyApp;

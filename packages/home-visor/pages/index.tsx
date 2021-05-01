@@ -1,16 +1,15 @@
-import Head from 'next/head'
-import { useQuery } from 'react-query'
-import styles from '../styles/Home.module.css'
-import { Container } from './api/projects';
+import Head from "next/head";
+import { useQuery } from "react-query";
+import styles from "../styles/Home.module.css";
+import { Container } from "./api/projects";
 
 export default function Home() {
-  const { isLoading, error, data } = useQuery<Container[]>(
-    'projects', 
-    () => fetch('/api/projects').then(res => res.json())
+  const { isLoading, error, data } = useQuery<Container[]>("projects", () =>
+    fetch("/api/projects").then((res) => res.json())
   );
 
   if (isLoading) {
-    return 'Loading...';
+    return "Loading...";
   }
 
   if (error) {
@@ -30,16 +29,15 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Home
-        </h1>
+        <h1 className={styles.title}>Home</h1>
 
-        {data.map(container => (
+        {data.map((container) => (
           <div key={container.id}>
-            {container.names.join(', ')} ({container.image}) - {container.status}
+            {container.names.join(", ")} ({container.image}) -{" "}
+            {container.status}
           </div>
         ))}
       </main>
     </div>
   );
-};
+}
