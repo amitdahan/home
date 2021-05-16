@@ -80,7 +80,7 @@ services:
       - TZ=Asia/Jerusalem
       - AUTO_UPDATE=true
     volumes:
-      - ${DATA_PATH}/config/jakett:/config
+      - ${DATA_PATH}/config/jackett:/config
       - ${DATA_PATH}/downloads:/downloads
     ports:
       - 9117:9117
