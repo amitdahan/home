@@ -9,6 +9,14 @@ Includes:
 - Transmission
 - Plex
 
-## `portainer`
+## `home-assistant`
 
-Manage & monitor docker containers using [Portainer](https://www.portainer.io/).
+Includes:
+- Home Assistant
+
+## `monitoring`
+
+Includes:
+- Portainer
+- OpenSpeedTest
+- Netdata
