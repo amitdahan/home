@@ -175,18 +175,6 @@ services:
       - seccomp:unconfined
     cap_add:
       - SYS_PTRACE
-      
-  openspeedtest:
-    image: openspeedtest/latest
-    container_name: openspeedtest
-    ports:
-      - 8080:8080
-    restart: unless-stopped
-    healthcheck:
-      test: curl -f http://localhost:8080
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
 volumes:
         portainer_data:
