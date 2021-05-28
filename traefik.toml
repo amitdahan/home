@@ -4,6 +4,9 @@ logLevel = "INFO"
   [entryPoints.web]
     address = ":80"
 
+  [entryPoints.web-secure]
+    address = ":443"
+
 [api]
   insecure = true
 
