@@ -1,0 +1,12 @@
+logLevel = "INFO"
+
+[entryPoints]
+  [web]
+    address = ":80"
+
+[api]
+  insecure = true
+
+[providers]
+  [providers.docker]
+    endpoint = "unix:///var/run/docker.sock"

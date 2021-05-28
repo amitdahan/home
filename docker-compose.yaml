@@ -125,13 +125,8 @@ services:
 
   traefik:
     image: traefik:v2.3
-    command:
-      - --log.level=INFO
-      - --api.insecure=true
-      - --entrypoints.web.address=:80
-      - --providers.docker
-
     volumes:
+      - traefik.toml:/etc/traefik/traefik.toml
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - "80:80"
