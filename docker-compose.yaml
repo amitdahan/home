@@ -112,3 +112,88 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  homeassistant:
+    container_name: homeassistant
+    image: homeassistant/raspberrypi4-homeassistant:stable
+    volumes:
+      - ${DATA_PATH}/config/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    ports:
+      - 8123:8123 
+
+  traefik:
+    image: traefik:v2.3
+    command:
+      - --log.level=INFO
+      - --api.insecure=true
+      - --entrypoints.web.address=:80
+      - --providers.docker
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "80:80"
+    labels:
+      traefik.http.routers.dash.rule: Host(`dash.localhost`)
+      traefik.http.routers.dash.service: api@internal
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - 8000:8000
+      - 9000:9000
+
+  agent:
+    image: portainer/agent
+    container_name: portainer_agent
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/dockers/volumes
+    ports:
+      - 9001:9001
+
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+    ports:
+      - 19999:19999
+    restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_PTRACE
+      
+  openspeedtest:
+    image: openspeedtest/latest
+    container_name: openspeedtest
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    healthcheck:
+      test: curl -f http://localhost:8080
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+        portainer_data:
+        netdataconfig:
+        netdatalib:
+        netdatacache:
