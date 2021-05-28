@@ -1,7 +1,7 @@
 logLevel = "INFO"
 
-[entryPoints]
-  [entryPoints.web]
+[entrypoints]
+  [entrypoints.web]
     address = ":80"
 
 [api]
