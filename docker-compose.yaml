@@ -124,7 +124,7 @@ services:
       - 8123:8123 
 
   traefik:
-    image: traefik:v2.3
+    image: traefik:v2.4
     volumes:
       - ./traefik.toml:/etc/traefik/traefik.toml
       - /var/run/docker.sock:/var/run/docker.sock:ro
