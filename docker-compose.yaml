@@ -130,6 +130,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - "80:80"
+      - "443:443"
     labels:
       traefik.http.routers.dash.rule: Host(`dash.localhost`)
       traefik.http.routers.dash.service: api@internal
