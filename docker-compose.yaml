@@ -44,6 +44,9 @@ services:
       - ${DATA_PATH}/downloads:/downloads
     ports:
       - 8989:8989
+    depends_on:
+      jackett:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: curl -f http://localhost:8989
@@ -64,6 +67,9 @@ services:
       - ${DATA_PATH}/downloads:/downloads
     ports:
       - 7878:7878
+    depends_on:
+      jackett:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: curl -f http://localhost:7878
@@ -122,6 +128,11 @@ services:
     restart: unless-stopped
     ports:
       - 8123:8123 
+    healthcheck:
+      test: curl -f http://localhost:8123/
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   traefik:
     image: traefik:v2.4
@@ -136,6 +147,7 @@ services:
     labels:
       traefik.http.routers.dash.rule: Host(`dash.localhost`)
       traefik.http.routers.dash.service: api@internal
+
   portainer:
     image: portainer/portainer-ce
     container_name: portainer
