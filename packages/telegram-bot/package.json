@@ -1,0 +1,13 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "author": "Amit Dahan",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": ":",
+    "start": ":"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}

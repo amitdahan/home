@@ -1,0 +1,27 @@
+FROM node:14-alpine as build
+
+WORKDIR /usr/src/app
+
+COPY package.json .
+COPY yarn.lock .
+COPY packages ./packages
+
+RUN yarn install --pure-lockfile --non-interactive
+RUN yarn build
+
+FROM node:14-alpine
+
+WORKDIR /usr/src/app
+
+COPY package.json .
+COPY yarn.lock .
+
+COPY --from=build /usr/src/app/packages /usr/src/app/packages
+
+ENV NODE_ENV production
+
+RUN yarn install --pure-lockfile --non-interactive --production
+
+WORKDIR /usr/src/app/packages/telegram-api
+
+CMD ["yarn", "start"]
