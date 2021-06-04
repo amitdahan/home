@@ -3,6 +3,9 @@ version: "3.8"
 
 services:
   telegram-bot:
+    container_name: telegram-bot
     build:
       context: .
       dockerfile: Dockerfile.telegram-bot
+    ports:
+      - 3000:3000
