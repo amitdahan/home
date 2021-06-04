@@ -190,6 +190,14 @@ services:
     cap_add:
       - SYS_PTRACE
 
+  telegram-bot:
+    container_name: telegram-bot
+    build:
+      context: .
+      dockerfile: Dockerfile.telegram-bot
+    ports:
+      - 3000:3000
+
 volumes:
         portainer_data:
         netdataconfig:
