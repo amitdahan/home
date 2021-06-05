@@ -204,7 +204,6 @@ services:
       dockerfile: Dockerfile.telegram-bot
     environment: 
       - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
-      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
       - SONARR_URL=${SONARR_URL}
       - SONARR_TOKEN=${SONARR_TOKEN}
       - RADARR_TOKEN=${RADARR_TOKEN}
