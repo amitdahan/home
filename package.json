@@ -6,8 +6,12 @@
   "author": "Amit Dahan <amitdahan11@gmail.com>",
   "license": "MIT",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "lint": "eslint --no-error-on-unmatched-pattern ."
+    "build": "wsrun -s build",
+    "lint": "eslint --no-error-on-unmatched-pattern --ignore-path .gitignore ."
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "4.22.0",
@@ -16,6 +20,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
     "prettier": "2.2.1",
-    "typescript": "4.2.4"
+    "typescript": "4.2.4",
+    "wsrun": "5.2.4"
   }
 }
