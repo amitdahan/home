@@ -2,9 +2,7 @@ import { Telegraf } from "telegraf";
 
 const { TELEGRAM_TOKEN } = process.env;
 
-export interface TelegramOptions {}
-
-export function setupTelegram({}: TelegramOptions = {}) {
+export function setupTelegram() {
   if (!TELEGRAM_TOKEN) {
     throw new Error("No TELEGRAM_TOKEN provided");
   }
