@@ -9,13 +9,12 @@
   },
   "dependencies": {
     "dotenv": "10.0.0",
-    "express": "4.17.1",
-    "node-telegram-bot-api": "0.53.0",
+    "node-fetch": "2.6.1",
     "telegraf": "4.3.0"
   },
   "devDependencies": {
-    "@types/express": "4.17.12",
     "@types/node": "^14",
+    "@types/node-fetch": "2.5.10",
     "nodemon": "2.0.7",
     "ts-node": "10.0.0",
     "typescript": "4.3.2"
