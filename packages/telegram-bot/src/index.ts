@@ -54,7 +54,7 @@ function setupCommands(
 function init() {
   const telegram = setupTelegram();
   const sonarr = setupSonarr();
-  //   const radarr = setupRadarr();
+  // const radarr = setupRadarr();
 
   setupCommands(telegram, {
     tv: {
