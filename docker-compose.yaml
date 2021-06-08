@@ -141,21 +141,6 @@ services:
       - "traefik.http.routers.transmission.entrypoints=web"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
 
-  homeassistant:
-    container_name: homeassistant
-    image: homeassistant/raspberrypi4-homeassistant:stable
-    volumes:
-      - ${DATA_PATH}/config/homeassistant:/config
-      - /etc/localtime:/etc/localtime:ro
-    restart: unless-stopped
-    ports:
-      - 8123:8123
-    healthcheck:
-      test: curl -f http://localhost:8123/
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   traefik:
     image: traefik:v2.4
     container_name: traefik
