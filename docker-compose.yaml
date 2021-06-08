@@ -30,6 +30,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.plex.rule=Host(`plex.home.local`)"
+      - "traefik.http.routers.plex.entrypoints=web"
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
 
   sonarr:
     image: ghcr.io/linuxserver/sonarr
@@ -53,6 +58,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.home.local`)"
+      - "traefik.http.routers.sonarr.entrypoints=web"
 
   radarr:
     image: ghcr.io/linuxserver/radarr
@@ -76,6 +85,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.home.local`)"
+      - "traefik.http.routers.radarr.entrypoints=web"
 
   jackett:
     image: ghcr.io/linuxserver/jackett
@@ -96,6 +109,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jackett.rule=Host(`index.home.local`)"
+      - "traefik.http.routers.jackett.entrypoints=web"
 
   transmission:
     image: ghcr.io/linuxserver/transmission
@@ -118,6 +135,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.transmission.rule=Host(`download.home.local`)"
+      - "traefik.http.routers.transmission.entrypoints=web"
+      - "traefik.http.services.transmission.loadbalancer.server.port=9091"
 
   homeassistant:
     container_name: homeassistant
@@ -127,7 +149,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     ports:
-      - 8123:8123 
+      - 8123:8123
     healthcheck:
       test: curl -f http://localhost:8123/
       interval: 10s
@@ -145,8 +167,11 @@ services:
       - "8080:8080"
       - "443:443"
     labels:
-      traefik.http.routers.dash.rule: Host(`dash.localhost`)
-      traefik.http.routers.dash.service: api@internal
+      - "traefik.enable=true"
+        #- "traefik.http.routers.traefik.service: api@internal"
+      - "traefik.http.routers.traefik.rule=Host(`dashboard.home.local`)"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 
   portainer:
     image: portainer/portainer-ce
@@ -159,6 +184,11 @@ services:
     ports:
       - 8000:8000
       - 9000:9000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.home.local`)"
+      - "traefik.http.routers.portainer.entrypoints=web"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
 
   agent:
     image: portainer/agent
@@ -189,6 +219,10 @@ services:
       - seccomp:unconfined
     cap_add:
       - SYS_PTRACE
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.netdata.rule=Host(`monitor.home.local`)"
+      - "traefik.http.routers.netdata.entrypoints=web"
 
 volumes:
         portainer_data:
