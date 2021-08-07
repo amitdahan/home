@@ -132,7 +132,7 @@ services:
     labels:
       traefik.http.routers.dash.rule: PathPrefix(`/dash`)
       traefik.http.routers.dash.service: api@internal
-      traefik.http.middlewares.example.stripprefix.prefixes: /foobar
+      traefik.http.middlewares.example.stripprefix.prefixes: /dash
       traefik.http.middlewares.example.stripprefix.forceslash: false
 
   portainer:
