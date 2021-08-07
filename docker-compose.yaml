@@ -130,11 +130,13 @@ services:
       - "8080:8080"
       - "443:443"
     labels:
-      traefik.http.routers.dash.rule: PathPrefix(`/dash`)
+      traefik.http.routers.dash.rule: PathPrefix(`/dash/`)
       traefik.http.routers.dash.service: api@internal
-      # traefik.http.routers.dash.middlewares: strip-dash
-      # traefik.http.middlewares.strip-dash.stripprefix.prefixes: /dash
-      # traefik.http.middlewares.strip-dash.stripprefix.forceslash: false
+      traefik.http.routers.dash.entrypoints: web
+      traefik.http.routers.dash.middlewares: dash
+      traefik.http.middlewares.dash.chain.middlewares: dash-strip-prefix
+      traefik.http.middlewares.dash-strip-prefix.stripprefix.prefixes: /dash
+      traefik.http.services.dash.loadbalancer.server.port: 8080
 
   portainer:
     image: portainer/portainer-ce
