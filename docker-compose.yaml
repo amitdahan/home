@@ -130,7 +130,7 @@ services:
       - "8080:8080"
       - "443:443"
     labels:
-      traefik.http.routers.dash.rule: Host(`dash.localhost`)
+      traefik.http.routers.dash.rule: PathPrefix(`/dash`)
       traefik.http.routers.dash.service: api@internal
 
   portainer:
