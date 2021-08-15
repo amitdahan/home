@@ -32,7 +32,7 @@ services:
       retries: 5
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.plex.rule=Host(`plex.home.local`)"
+      - "traefik.http.routers.plex.rule=Host(`plex.home.io`)"
       - "traefik.http.routers.plex.entrypoints=web"
       - "traefik.http.services.plex.loadbalancer.server.port=32400"
 
@@ -60,7 +60,7 @@ services:
       retries: 5
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr.home.local`)"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.home.io`)"
       - "traefik.http.routers.sonarr.entrypoints=web"
 
   radarr:
@@ -87,7 +87,7 @@ services:
       retries: 5
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`radarr.home.local`)"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.home.io`)"
       - "traefik.http.routers.radarr.entrypoints=web"
 
   jackett:
@@ -111,7 +111,7 @@ services:
       retries: 5
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jackett.rule=Host(`index.home.local`)"
+      - "traefik.http.routers.jackett.rule=Host(`index.home.io`)"
       - "traefik.http.routers.jackett.entrypoints=web"
 
   transmission:
@@ -137,7 +137,7 @@ services:
       retries: 5
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.transmission.rule=Host(`download.home.local`)"
+      - "traefik.http.routers.transmission.rule=Host(`download.home.io`)"
       - "traefik.http.routers.transmission.entrypoints=web"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
 
@@ -153,8 +153,7 @@ services:
       - "443:443"
     labels:
       - "traefik.enable=true"
-        #- "traefik.http.routers.traefik.service: api@internal"
-      - "traefik.http.routers.traefik.rule=Host(`dashboard.home.local`)"
+      - "traefik.http.routers.traefik.rule=Host(`proxy.home.io`)"
       - "traefik.http.routers.traefik.entrypoints=web"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 
@@ -171,7 +170,7 @@ services:
       - 9000:9000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.home.local`)"
+      - "traefik.http.routers.portainer.rule=Host(`docker.home.io`)"
       - "traefik.http.routers.portainer.entrypoints=web"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
 
@@ -185,32 +184,27 @@ services:
     ports:
       - 9001:9001
 
-  netdata:
-    image: netdata/netdata
-    container_name: netdata
-    volumes:
-      - netdataconfig:/etc/netdata
-      - netdatalib:/var/lib/netdata
-      - netdatacache:/var/cache/netdata
-      - /etc/passwd:/host/etc/passwd:ro
-      - /etc/group:/host/etc/group:ro
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /etc/os-release:/host/etc/os-release:ro
+  dnsmasq:
+    image: micedwards/dnsmasq-gui:arm7
+    container_name: 'dnsmasq'
     ports:
-      - 19999:19999
-    restart: unless-stopped
-    security_opt:
-      - seccomp:unconfined
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "5380:8080/tcp"
+    restart: always
+    environment:
+      - HTTP_USER=admin
+      - HTTP_PASS=admin
     cap_add:
-      - SYS_PTRACE
+      - NET_ADMIN
+    volumes:
+      - ${DATA_PATH}/config/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.netdata.rule=Host(`monitor.home.local`)"
-      - "traefik.http.routers.netdata.entrypoints=web"
+      - "traefik.http.routers.dnsmasq.rule=Host(`ns.home.io`)"
+      - "traefik.http.routers.dnsmasq.entrypoints=web"
+      - "traefik.http.services.dnsmasq.loadbalancer.server.port=5380"
+
 
 volumes:
         portainer_data:
-        netdataconfig:
-        netdatalib:
-        netdatacache:
