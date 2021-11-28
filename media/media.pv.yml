@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-pv-config
+  namespace: plex
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/t5/config/plex"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-pv-tv-data
+  namespace: plex
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/t5/library/tv"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-pv-movie-data
+  namespace: plex
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/t5/library/movies"
