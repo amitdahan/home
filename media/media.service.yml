@@ -49,3 +49,4 @@ spec:
       targetPort: 32469
       protocol: TCP
       name: dlna-tcp
+  type: LoadBalancer
