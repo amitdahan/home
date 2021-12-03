@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jackett
+  labels:
+    app: jackett
+  namespace: media
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: jackett
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: jackett
+    spec:
+      volumes:
+      - name: jackett-config
+        persistentVolumeClaim:
+          claimName: jackett-pvc-config
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Asia/Jerusalem
+          image: ghcr.io/linuxserver/jackett
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 9117
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          name: jackett
+          ports:
+          - containerPort: 9117
+            name: webui
+          resources: {}
+          stdin: true
+          tty: true
+          volumeMounts:
+          - mountPath: /config
+            name: jackett-config
+      restartPolicy: Always
