@@ -4,7 +4,7 @@ metadata:
   labels:
     app: plex
   name: plex
-  namespace: plex
+  namespace: media
 spec:
   replicas: 1
   revisionHistoryLimit: 0
