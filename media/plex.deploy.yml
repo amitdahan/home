@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: plex
   labels:
     app: plex
-  name: plex
   namespace: media
 spec:
   replicas: 1
@@ -34,9 +34,9 @@ spec:
       containers:
       - env:
         - name: PGID
-          value: "\x31\x30\x30\x30"
+          value: "1000"
         - name: PUID
-          value: "\x31\x30\x30\x30"
+          value: "1000"
         - name: VERSION
           value: docker
         - name: TZ

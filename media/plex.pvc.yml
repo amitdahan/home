@@ -7,7 +7,7 @@ spec:
   storageClassName: manual
   volumeName: plex-pv-config
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   volumeMode: Filesystem
   resources:
     requests:
@@ -22,7 +22,7 @@ spec:
   storageClassName: manual
   volumeName: plex-pv-tv-data
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   volumeMode: Filesystem
   resources:
     requests:
@@ -37,7 +37,7 @@ spec:
   storageClassName: manual
   volumeName: plex-pv-movie-data
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   volumeMode: Filesystem
   resources:
     requests:

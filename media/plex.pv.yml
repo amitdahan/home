@@ -8,7 +8,7 @@ spec:
   capacity:
     storage: 1Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/mnt/t5/config/plex"
@@ -23,7 +23,7 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/mnt/t5/library/tv"
@@ -38,7 +38,7 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/mnt/t5/library/movies"
