@@ -25,6 +25,7 @@ spec:
       - name: homeassistant-config
         persistentVolumeClaim:
           claimName: homeassistant-pvc-config
+      hostNetwork: true
       containers:
         - image: homeassistant/raspberrypi4-homeassistant:stable
           imagePullPolicy: Always
