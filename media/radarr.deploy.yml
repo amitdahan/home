@@ -21,6 +21,8 @@ spec:
       labels:
         app: radarr
     spec:
+      nodeSelector:
+        disktype: nfs
       volumes:
       - name: radarr-config
         persistentVolumeClaim:

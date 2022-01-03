@@ -21,10 +21,12 @@ spec:
       labels:
         app: homeassistant
     spec:
+      nodeSelector:
+        disktype: usb
       volumes:
-      - name: homeassistant-config
-        persistentVolumeClaim:
-          claimName: homeassistant-pvc-config
+        - name: homeassistant-config
+          persistentVolumeClaim:
+            claimName: homeassistant-pvc-config
       hostNetwork: true
       containers:
         - image: homeassistant/raspberrypi4-homeassistant:stable

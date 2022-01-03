@@ -21,6 +21,8 @@ spec:
       labels:
         app: sonarr
     spec:
+      nodeSelector:
+        disktype: nfs
       volumes:
       - name: sonarr-config
         persistentVolumeClaim:

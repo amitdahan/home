@@ -21,6 +21,8 @@ spec:
       labels:
         app: bazarr
     spec:
+      nodeSelector:
+        disktype: nfs
       volumes:
       - name: bazarr-config
         persistentVolumeClaim:

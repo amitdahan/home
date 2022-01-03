@@ -21,6 +21,8 @@ spec:
       labels:
         app: jackett
     spec:
+      nodeSelector:
+        disktype: nfs
       volumes:
       - name: jackett-config
         persistentVolumeClaim:

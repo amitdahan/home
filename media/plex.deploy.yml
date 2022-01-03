@@ -21,6 +21,8 @@ spec:
       labels:
         app: plex
     spec:
+      nodeSelector:
+        disktype: usb
       volumes:
       - name: plex-config
         persistentVolumeClaim:

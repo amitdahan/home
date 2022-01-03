@@ -21,6 +21,8 @@ spec:
       labels:
         app: transmission
     spec:
+      nodeSelector:
+        disktype: usb
       volumes:
       - name: transmission-config
         persistentVolumeClaim:
