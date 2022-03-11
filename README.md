@@ -1,22 +1,16 @@
 # Home Stack
 
-## `media-server`
+K8s configurations for:
 
-Includes:
+## `media` namespace
+
 - Jackett
 - Sonarr
 - Radarr
+- Bazarr
 - Transmission
 - Plex
 
-## `home-assistant`
+## `smart-home` namespace
 
-Includes:
 - Home Assistant
-
-## `monitoring`
-
-Includes:
-- Portainer
-- OpenSpeedTest
-- Netdata

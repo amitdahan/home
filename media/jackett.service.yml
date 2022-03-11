@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jackett
+  labels:
+    app: jackett
+  namespace: media
+spec:
+  selector:
+    app: jackett
+  ports:
+    - port: 9117
+      protocol: TCP
+      targetPort: 9117
+      name: webui

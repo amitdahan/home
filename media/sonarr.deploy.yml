@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  labels:
+    app: sonarr
+  namespace: media
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: sonarr
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      nodeSelector:
+        disktype: nfs
+      volumes:
+      - name: sonarr-config
+        persistentVolumeClaim:
+          claimName: sonarr-pvc-config
+      - name: sonarr-downloads
+        persistentVolumeClaim:
+          claimName: sonarr-pvc-downloads
+      - name: sonarr-library
+        persistentVolumeClaim:
+          claimName: sonarr-pvc-library
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Asia/Jerusalem
+          image: ghcr.io/linuxserver/sonarr:3.0.7.1477-ls136
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 8989
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          name: sonarr
+          ports:
+          - containerPort: 8989
+            name: webui
+          resources: {}
+          stdin: true
+          tty: true
+          volumeMounts:
+          - mountPath: /config
+            name: sonarr-config
+          - mountPath: /downloads
+            name: sonarr-downloads
+          - mountPath: /tv
+            name: sonarr-library
+      restartPolicy: Always

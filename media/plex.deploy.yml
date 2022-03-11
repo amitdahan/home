@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plex
+  labels:
+    app: plex
+  namespace: media
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: plex
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: plex
+    spec:
+      nodeSelector:
+        disktype: usb
+      volumes:
+      - name: plex-config
+        persistentVolumeClaim:
+          claimName: plex-pvc-config
+      - name: tv-data
+        persistentVolumeClaim:
+          claimName: plex-pvc-tv-data
+      - name: movie-data
+        persistentVolumeClaim:
+          claimName: plex-pvc-movie-data
+      containers:
+      - env:
+        - name: PGID
+          value: "1000"
+        - name: PUID
+          value: "1000"
+        - name: VERSION
+          value: docker
+        - name: TZ
+          value: Asia/Jerusalem
+        image: ghcr.io/linuxserver/plex:1.25.6.5577-c8bd13540-ls104
+        imagePullPolicy: Always
+        livenessProbe:
+          tcpSocket:
+            port: 32400
+          initialDelaySeconds: 30
+          periodSeconds: 5
+        name: plex
+        ports:
+        - containerPort: 32400
+          name: pms-web
+          protocol: TCP
+        - containerPort: 32469
+          name: dlna-tcp
+          protocol: TCP
+        - containerPort: 1900
+          name: dlna-udp
+          protocol: UDP
+        - containerPort: 3005
+          name: plex-companion
+          protocol: TCP  
+        - containerPort: 5353
+          name: discovery-udp
+          protocol: UDP  
+        - containerPort: 8324
+          name: plex-roku
+          protocol: TCP  
+        - containerPort: 32410
+          name: gdm-32410
+          protocol: UDP
+        - containerPort: 32412
+          name: gdm-32412
+          protocol: UDP
+        - containerPort: 32413
+          name: gdm-32413
+          protocol: UDP
+        - containerPort: 32414
+          name: gdm-32414
+          protocol: UDP
+        resources: {}
+        stdin: true
+        tty: true
+        volumeMounts:
+        - mountPath: /config
+          name: plex-config
+        - mountPath: /tv
+          name: tv-data 
+        - mountPath: /movies
+          name: movie-data 
+      restartPolicy: Always

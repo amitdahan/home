@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transmission
+  labels:
+    app: transmission
+  namespace: media
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: transmission
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: transmission
+    spec:
+      nodeSelector:
+        disktype: usb
+      volumes:
+      - name: transmission-config
+        persistentVolumeClaim:
+          claimName: transmission-pvc-config
+      - name: transmission-downloads
+        persistentVolumeClaim:
+          claimName: transmission-pvc-downloads
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Asia/Jerusalem
+          image: ghcr.io/linuxserver/transmission:3.00-r5-ls115
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 9091
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          name: transmission
+          ports:
+          - containerPort: 9091
+            name: webui
+          - containerPort: 51413
+            protocol: TCP
+            name: torrent-tcp
+          - containerPort: 51413
+            protocol: UDP
+            name: torrent-udp
+          resources: {}
+          stdin: true
+          tty: true
+          volumeMounts:
+          - mountPath: /config
+            name: transmission-config
+          - mountPath: /downloads
+            name: transmission-downloads
+      restartPolicy: Always

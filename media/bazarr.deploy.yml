@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  labels:
+    app: bazarr
+  namespace: media
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: bazarr
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: bazarr
+    spec:
+      nodeSelector:
+        disktype: nfs
+      volumes:
+      - name: bazarr-config
+        persistentVolumeClaim:
+          claimName: bazarr-pvc-config
+      - name: bazarr-tv-library
+        persistentVolumeClaim:
+          claimName: bazarr-pvc-tv-library
+      - name: bazarr-movie-library
+        persistentVolumeClaim:
+          claimName: bazarr-pvc-movie-library
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Asia/Jerusalem
+          image: ghcr.io/linuxserver/bazarr:v1.0.3-ls146
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 6767
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          name: bazarr
+          ports:
+          - containerPort: 6767
+            name: webui
+          resources: {}
+          stdin: true
+          tty: true
+          volumeMounts:
+          - mountPath: /config
+            name: bazarr-config
+          - mountPath: /tv
+            name: bazarr-tv-library
+          - mountPath: /movies
+            name: bazarr-movie-library
+      restartPolicy: Always

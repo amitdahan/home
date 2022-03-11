@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homeassistant
+  labels:
+    app: homeassistant
+  namespace: smart-home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: homeassistant
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: homeassistant
+    spec:
+      nodeSelector:
+        disktype: usb
+      volumes:
+        - name: homeassistant-config
+          persistentVolumeClaim:
+            claimName: homeassistant-pvc-config
+      hostNetwork: true
+      containers:
+        - image: homeassistant/raspberrypi4-homeassistant:2022.4.0.dev20220311
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 8123
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          name: homeassistant
+          ports:
+          - containerPort: 8123
+            name: webui
+          resources: {}
+          stdin: true
+          tty: true
+          volumeMounts:
+          - mountPath: /config
+            name: homeassistant-config
+      restartPolicy: Always

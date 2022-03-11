@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: transmission
+  labels:
+    app: transmission
+  namespace: media
+spec:
+  selector:
+    app: transmission
+  ports:
+    - port: 9091
+      protocol: TCP
+      targetPort: 9091
+      name: webui
+    - port: 31413
+      protocol: TCP
+      nodePort: 31413
+      name: torrent-tcp
+    - port: 31413
+      protocol: UDP
+      nodePort: 31413
+      name: torrent-udp
+  type: NodePort

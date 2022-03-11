@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+  labels:
+    app: radarr
+  namespace: media
+spec:
+  selector:
+    app: radarr
+  ports:
+    - port: 7878
+      protocol: TCP
+      targetPort: 7878
+      name: webui
