@@ -41,7 +41,7 @@ spec:
               value: "1000"
             - name: TZ
               value: Asia/Jerusalem
-          image: ghcr.io/linuxserver/bazarr:v1.1.0-ls157
+          image: ghcr.io/linuxserver/bazarr:v1.1.0-ls159
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
