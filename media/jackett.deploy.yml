@@ -35,7 +35,7 @@ spec:
               value: "1000"
             - name: TZ
               value: Asia/Jerusalem
-          image: ghcr.io/linuxserver/jackett:v0.20.1470-ls74
+          image: ghcr.io/linuxserver/jackett:v0.20.1687-ls74
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
