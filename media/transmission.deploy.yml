@@ -24,12 +24,12 @@ spec:
       nodeSelector:
         disktype: usb
       volumes:
-      - name: transmission-config
-        persistentVolumeClaim:
-          claimName: transmission-pvc-config
-      - name: transmission-downloads
-        persistentVolumeClaim:
-          claimName: transmission-pvc-downloads
+        - name: transmission-config
+          persistentVolumeClaim:
+            claimName: transmission-pvc-config
+        - name: transmission-downloads
+          persistentVolumeClaim:
+            claimName: transmission-pvc-downloads
       containers:
         - env:
             - name: PGID
@@ -38,7 +38,7 @@ spec:
               value: "1000"
             - name: TZ
               value: Asia/Jerusalem
-          image: ghcr.io/linuxserver/transmission:4.0.0-r0-ls152
+          image: ghcr.io/linuxserver/transmission:4.0.3-r0-ls170
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
@@ -47,20 +47,20 @@ spec:
             periodSeconds: 5
           name: transmission
           ports:
-          - containerPort: 9091
-            name: webui
-          - containerPort: 51413
-            protocol: TCP
-            name: torrent-tcp
-          - containerPort: 51413
-            protocol: UDP
-            name: torrent-udp
+            - containerPort: 9091
+              name: webui
+            - containerPort: 51413
+              protocol: TCP
+              name: torrent-tcp
+            - containerPort: 51413
+              protocol: UDP
+              name: torrent-udp
           resources: {}
           stdin: true
           tty: true
           volumeMounts:
-          - mountPath: /config
-            name: transmission-config
-          - mountPath: /downloads
-            name: transmission-downloads
+            - mountPath: /config
+              name: transmission-config
+            - mountPath: /downloads
+              name: transmission-downloads
       restartPolicy: Always

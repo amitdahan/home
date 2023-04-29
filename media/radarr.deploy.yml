@@ -24,15 +24,15 @@ spec:
       nodeSelector:
         disktype: nfs
       volumes:
-      - name: radarr-config
-        persistentVolumeClaim:
-          claimName: radarr-pvc-config
-      - name: radarr-downloads
-        persistentVolumeClaim:
-          claimName: radarr-pvc-downloads
-      - name: radarr-library
-        persistentVolumeClaim:
-          claimName: radarr-pvc-library
+        - name: radarr-config
+          persistentVolumeClaim:
+            claimName: radarr-pvc-config
+        - name: radarr-downloads
+          persistentVolumeClaim:
+            claimName: radarr-pvc-downloads
+        - name: radarr-library
+          persistentVolumeClaim:
+            claimName: radarr-pvc-library
       containers:
         - env:
             - name: PGID
@@ -41,7 +41,7 @@ spec:
               value: "1000"
             - name: TZ
               value: Asia/Jerusalem
-          image: ghcr.io/linuxserver/radarr:4.3.2.6857-ls160
+          image: ghcr.io/linuxserver/radarr:4.4.4.7068-ls170
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
@@ -50,16 +50,16 @@ spec:
             periodSeconds: 5
           name: radarr
           ports:
-          - containerPort: 7878
-            name: webui
+            - containerPort: 7878
+              name: webui
           resources: {}
           stdin: true
           tty: true
           volumeMounts:
-          - mountPath: /config
-            name: radarr-config
-          - mountPath: /downloads
-            name: radarr-downloads
-          - mountPath: /movies
-            name: radarr-library
+            - mountPath: /config
+              name: radarr-config
+            - mountPath: /downloads
+              name: radarr-downloads
+            - mountPath: /movies
+              name: radarr-library
       restartPolicy: Always
