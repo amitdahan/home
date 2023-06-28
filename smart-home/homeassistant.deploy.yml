@@ -29,7 +29,7 @@ spec:
             claimName: homeassistant-pvc-config
       hostNetwork: true
       containers:
-        - image: homeassistant/raspberrypi4-homeassistant:2023.7.0.dev20230628
+        - image: homeassistant/raspberrypi4-homeassistant:2023.7.0.dev20230626
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
