@@ -38,7 +38,7 @@ spec:
               value: "1000"
             - name: TZ
               value: Asia/Jerusalem
-          image: ghcr.io/linuxserver/transmission:4.0.3-r3-ls184
+          image: ghcr.io/linuxserver/transmission:4.0.3-r6-ls190
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
