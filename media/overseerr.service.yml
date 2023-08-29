@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: overseerr
+  labels:
+    app: overseerr
+  namespace: media
+spec:
+  selector:
+    app: overseerr
+  ports:
+    - port: 5055
+      protocol: TCP
+      targetPort: 5055
+      name: webui
