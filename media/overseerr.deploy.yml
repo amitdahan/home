@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: overseerr
+  labels:
+    app: overseerr
+  namespace: media
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: overseerr
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: overseerr
+    spec:
+      nodeSelector:
+        disktype: nfs
+      volumes:
+        - name: overseerr-config
+          persistentVolumeClaim:
+            claimName: overseerr-pvc-config
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Asia/Jerusalem
+          image: ghcr.io/linuxserver/overseerr:v1.33.2-ls78
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 5055
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          name: overseerr
+          ports:
+            - containerPort: 5055
+              name: webui
+          resources: {}
+          stdin: true
+          tty: true
+          volumeMounts:
+            - mountPath: /config
+              name: overseerr-config
+      restartPolicy: Always
