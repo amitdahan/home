@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto
+  labels:
+    app: mosquitto
+  namespace: smart-home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: mosquitto
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+    spec:
+      nodeSelector:
+        disktype: usb
+      volumes:
+        - name: mosquitto-config
+          persistentVolumeClaim:
+            claimName: mosquitto-pvc-config
+      hostNetwork: true
+      containers:
+        - image: eclipse-mosquitto:2.0.18
+          env:
+            - name: TZ
+              value: Asia/Jerusalem
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 1883
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          name: mosquitto
+          ports:
+            - containerPort: 1883
+              protocol: TCP
+              name: mqtt
+          resources: {}
+          stdin: true
+          tty: true
+          volumeMounts:
+            - mountPath: /mosquitto
+              name: mosquitto-config
+      restartPolicy: Always
