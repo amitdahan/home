@@ -41,7 +41,7 @@ spec:
               value: "1000"
             - name: TZ
               value: Asia/Jerusalem
-          image: ghcr.io/linuxserver/sonarr:develop-4.0.0.720-ls7
+          image: ghcr.io/linuxserver/sonarr:develop-4.0.0.733-ls12
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
