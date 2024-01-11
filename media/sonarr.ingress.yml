@@ -5,7 +5,7 @@ metadata:
   name: sonarr
 spec:
   rules:
-  - host: sonarr.home.amitd.io
+  - host: sonarr.arloz.dahan.in
     http:
       paths:
       - path: /

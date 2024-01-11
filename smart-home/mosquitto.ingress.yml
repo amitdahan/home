@@ -5,7 +5,7 @@ metadata:
   name: mosquitto
 spec:
   rules:
-  - host: mqtt.home.amitd.io
+  - host: mqtt.arloz.dahan.in
     http:
       paths:
       - path: /

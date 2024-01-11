@@ -5,7 +5,7 @@ metadata:
   name: homeassistant
 spec:
   rules:
-  - host: home.amitd.io
+  - host: arloz.dahan.in
     http:
       paths:
       - path: /

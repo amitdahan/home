@@ -5,7 +5,7 @@ metadata:
   name: overseerr
 spec:
   rules:
-  - host: overseerr.home.amitd.io
+  - host: overseerr.arloz.dahan.in
     http:
       paths:
       - path: /

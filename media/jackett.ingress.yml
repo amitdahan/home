@@ -5,7 +5,7 @@ metadata:
   name: jackett
 spec:
   rules:
-  - host: jackett.home.amitd.io
+  - host: jackett.arloz.dahan.in
     http:
       paths:
       - path: /

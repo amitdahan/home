@@ -5,7 +5,7 @@ metadata:
   name: plex
 spec:
   rules:
-  - host: plex.home.amitd.io
+  - host: plex.arloz.dahan.in
     http:
       paths:
       - path: /

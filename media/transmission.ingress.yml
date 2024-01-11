@@ -5,7 +5,7 @@ metadata:
   name: transmission
 spec:
   rules:
-  - host: transmission.home.amitd.io
+  - host: transmission.arloz.dahan.in
     http:
       paths:
       - path: /
