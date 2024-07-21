@@ -43,7 +43,7 @@ spec:
               value: docker
             - name: TZ
               value: Asia/Jerusalem
-          image: ghcr.io/linuxserver/plex:1.40.2.8395-c67dce28e-ls215
+          image: ghcr.io/linuxserver/plex:1.40.4.8679-424562606-ls223
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
