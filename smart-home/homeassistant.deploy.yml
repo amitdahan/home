@@ -29,7 +29,7 @@ spec:
             claimName: homeassistant-pvc-config
       hostNetwork: true
       containers:
-        - image: ghcr.io/home-assistant/raspberrypi4-homeassistant:2024.9.1
+        - image: ghcr.io/home-assistant/raspberrypi4-homeassistant:2024.10.3
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
