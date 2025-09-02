@@ -29,7 +29,7 @@ spec:
             claimName: mosquitto-pvc-config
       hostNetwork: true
       containers:
-        - image: eclipse-mosquitto:2.0.21
+        - image: eclipse-mosquitto:2.0.22
           env:
             - name: TZ
               value: Asia/Jerusalem
