@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clawdbot
+  labels:
+    app: clawdbot
+  namespace: smart-home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: clawdbot
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: clawdbot
+    spec:
+      nodeSelector:
+        disktype: usb
+      volumes:
+        - name: clawdbot-config
+          persistentVolumeClaim:
+            claimName: clawdbot-pvc-config
+      containers:
+        - name: clawdbot
+          image: clawdbot:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 18789
+              name: ui
+          env:
+            - name: CLAWDBOT_ENV_FILE
+              value: /config/.env
+          volumeMounts:
+            - mountPath: /config
+              name: clawdbot-config
+          livenessProbe:
+            tcpSocket:
+              port: 18789
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 18789
+            initialDelaySeconds: 10
+            periodSeconds: 5
+      restartPolicy: Always
