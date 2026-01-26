@@ -29,8 +29,8 @@ spec:
             claimName: clawdbot-pvc-config
       containers:
         - name: clawdbot
-          image: clawdbot:local
-          imagePullPolicy: Never
+          image: ghcr.io/amitdahan/home/clawdbot:dev
+          imagePullPolicy: PullIfMissing
           ports:
             - containerPort: 18789
               name: ui
