@@ -2,7 +2,14 @@ FROM node:22-alpine
 
 RUN apk add --no-cache bash curl git python3 make g++
 
-RUN npm install -g clawdbot@latest
+ARG CLAWDBOT_VERSION=2026.1.24-3
+
+ENV NPM_CONFIG_FUND=false
+ENV NPM_CONFIG_AUDIT=false
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false
+ENV NPM_CONFIG_PREFER_OFFLINE=true
+
+RUN npm install -g "clawdbot@${CLAWDBOT_VERSION}"
 
 ENV HOME=/home/node
 WORKDIR /home/node
