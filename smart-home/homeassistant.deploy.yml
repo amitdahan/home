@@ -31,6 +31,19 @@ spec:
       containers:
         - image: ghcr.io/home-assistant/raspberrypi4-64-homeassistant:2026.1.3
           imagePullPolicy: Always
+          startupProbe:
+            tcpSocket:
+              port: 8123
+            failureThreshold: 60
+            periodSeconds: 5
+            timeoutSeconds: 1
+          livenessProbe:
+            tcpSocket:
+              port: 8123
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
           name: homeassistant
           ports:
             - containerPort: 8123
