@@ -41,7 +41,7 @@ spec:
               value: "1000"
             - name: TZ
               value: Asia/Jerusalem
-          image: ghcr.io/linuxserver/radarr:5.26.2.10099-ls281
+          image: ghcr.io/linuxserver/radarr:6.0.4.10291-ls290
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
