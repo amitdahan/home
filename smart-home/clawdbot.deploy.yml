@@ -34,11 +34,8 @@ spec:
           ports:
             - containerPort: 18789
               name: ui
-          env:
-            - name: CLAWDBOT_ENV_FILE
-              value: /config/.env
           volumeMounts:
-            - mountPath: /config
+            - mountPath: /home/node
               name: clawdbot-config
           livenessProbe:
             tcpSocket:
