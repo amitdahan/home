@@ -30,7 +30,7 @@ spec:
       containers:
         - name: clawdbot
           image: ghcr.io/amitdahan/home/clawdbot:dev
-          imagePullPolicy: PullIfMissing
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 18789
               name: ui
