@@ -31,16 +31,29 @@ spec:
       containers:
         - image: ghcr.io/home-assistant/raspberrypi4-64-homeassistant:2026.1.3
           imagePullPolicy: Always
+          startupProbe:
+            tcpSocket:
+              port: 8123
+            failureThreshold: 120
+            periodSeconds: 5
+            timeoutSeconds: 3
           livenessProbe:
             tcpSocket:
               port: 8123
-            initialDelaySeconds: 30
-            periodSeconds: 5
+            initialDelaySeconds: 180
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 6
           name: homeassistant
           ports:
             - containerPort: 8123
               name: webui
-          resources: {}
+          resources:
+            requests:
+              cpu: 250m
+              memory: 1024Mi
+            limits:
+              memory: 3072Mi
           stdin: true
           tty: true
           volumeMounts:

@@ -49,7 +49,9 @@ spec:
             tcpSocket:
               port: 32400
             initialDelaySeconds: 30
-            periodSeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
           name: plex
           ports:
             - containerPort: 32400
@@ -82,7 +84,12 @@ spec:
             - containerPort: 32414
               name: gdm-32414
               protocol: UDP
-          resources: {}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1536Mi
           stdin: true
           tty: true
           volumeMounts:

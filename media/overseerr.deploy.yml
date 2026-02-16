@@ -41,12 +41,19 @@ spec:
             tcpSocket:
               port: 5055
             initialDelaySeconds: 30
-            periodSeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
           name: overseerr
           ports:
             - containerPort: 5055
               name: webui
-          resources: {}
+          resources:
+            requests:
+              cpu: 50m
+              memory: 192Mi
+            limits:
+              memory: 512Mi
           stdin: true
           tty: true
           volumeMounts:

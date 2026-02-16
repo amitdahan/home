@@ -47,12 +47,19 @@ spec:
             tcpSocket:
               port: 7878
             initialDelaySeconds: 30
-            periodSeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
           name: radarr
           ports:
             - containerPort: 7878
               name: webui
-          resources: {}
+          resources:
+            requests:
+              cpu: 50m
+              memory: 256Mi
+            limits:
+              memory: 768Mi
           stdin: true
           tty: true
           volumeMounts:
