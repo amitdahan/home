@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: actual-importer-manual
+  labels:
+    app: actual-importer
+  namespace: finance
+spec:
+  ttlSecondsAfterFinished: 86400
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: actual-importer
+    spec:
+      nodeSelector:
+        disktype: nfs
+      restartPolicy: Never
+      volumes:
+        - name: actual-importer-config
+          persistentVolumeClaim:
+            claimName: actual-importer-pvc-config
+      containers:
+        - name: actual-importer
+          image: ghcr.io/amitdahan/actual-israeli-importer:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: Asia/Jerusalem
+          volumeMounts:
+            - name: actual-importer-config
+              mountPath: /app/config.json
+              subPath: config.json
+              readOnly: true
+            - name: actual-importer-config
+              mountPath: /app/cache
+              subPath: cache
+            - name: actual-importer-config
+              mountPath: /app/chrome-data
+              subPath: chrome-data
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              memory: 2Gi
