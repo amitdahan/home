@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   namespace: finance
   name: actual
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: finance-actual-redirect-https@kubernetescrd
 spec:
   rules:
   - host: actual.arloz.dahan.in
