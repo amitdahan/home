@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actual
+  labels:
+    app: actual
+  namespace: finance
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: actual
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: actual
+    spec:
+      nodeSelector:
+        disktype: nfs
+      volumes:
+        - name: actual-config
+          persistentVolumeClaim:
+            claimName: actual-pvc-config
+      containers:
+        - env:
+            - name: ACTUAL_DATA_DIR
+              value: /data
+            - name: ACTUAL_PORT
+              value: "5006"
+            - name: TZ
+              value: Asia/Jerusalem
+          image: actualbudget/actual-server:latest-alpine
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 5006
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          name: actual
+          ports:
+            - containerPort: 5006
+              name: webui
+          resources:
+            requests:
+              cpu: 50m
+              memory: 256Mi
+            limits:
+              memory: 768Mi
+          stdin: true
+          tty: true
+          volumeMounts:
+            - mountPath: /data
+              name: actual-config
+      restartPolicy: Always

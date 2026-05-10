@@ -2,6 +2,10 @@
 
 K8s configurations for:
 
+## `finance` namespace
+
+- Actual Budget
+
 ## `media` namespace
 
 - Jackett
